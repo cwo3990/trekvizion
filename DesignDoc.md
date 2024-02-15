@@ -17,8 +17,7 @@
 
 ## Executive Summary
 
-This is a summary of the project.
-
+TrekVizion is an innovated hiking application that employs image registration to refine the precision of mapped trails. This transformative technique entails superimposing trail map images onto satellite maps, resulting in heightened image accuracy. By seamlessly integrating these visual layers, TrekVizion not only enhances location tracking but also ensures the safety of its users on their wilderness journeys.
 
 ## Requirements
 
