@@ -36,12 +36,12 @@ This section describes the features of the application.
 This section describes the application architecture.
 
 ### Software Architecture
-> _Place a architectural diagram here._
+![MVVM Architecture](/TrekVizion%20Architecture%20MVVM.png)
 > _Describe your software architecture._
 
 
 ### Use Cases
-> _Place a use case diagram here._
+![Use Case Diagram](/TrekVizion%20Use%20Case%20Diagram.png)
 > _Describe your use case diagram._
 
 
