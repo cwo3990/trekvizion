@@ -21,8 +21,6 @@ TrekVizion is an innovated hiking application that employs image registration to
 
 ## Requirements
 
-This section describes the features of the application.
-
 ### Definition of MVP
 The MVP aims to provide a safe and reliable hiking experience by offering essential functionalities for trip planning, real-time tracking, and post-hike analysis.
 
@@ -125,4 +123,5 @@ ___
 
 ### Class Diagram
 ![Class Diagram](/Trekvizion%20Class%20Diagram.png)
-> _Describe your class diagram._
+
+Trekvizion will consist of several screens: StartHikeView, ActiveHikeView, HistoryView, POIView, and SettingsView. Each of these views will have a corresponding ViewModel that will handle the logic and updating of the data for the corresponding views. The model of our architecutre currently consists of a Hike class which represents a hike in the system, a WeatherService, a CoregistrationService, a flutter package called GeolocationTracker for getting a user's GPS location, a flutter package called GetStorage for storing user settings, and a DBAdapter which will be an interface for a class that will access our database. Currently, the fields and methods for most of our classes are TBD. This diagram is a work in progress and will be updated as we learn more about Dart and the system we are building.
