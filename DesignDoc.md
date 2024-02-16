@@ -48,5 +48,5 @@ Trekvizion uses an MVVM architectural model because 95% of the time this applica
 
 
 ### Class Diagram
-> _Place a class diagram here._
+![Class Diagram](/Trekvizion%20Class%20Diagram.png)
 > _Describe your class diagram._
