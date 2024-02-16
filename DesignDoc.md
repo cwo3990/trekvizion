@@ -36,11 +36,10 @@ The minimal viable product (MVP) for this hiking application would include the f
 
 ## Architecture and Design
 
-This section describes the application architecture.
-
 ### Software Architecture
 ![MVVM Architecture](/TrekVizion%20Architecture%20MVVM.png)
-> _Describe your software architecture._
+
+Trekvizion uses an MVVM architectural model because 95% of the time this application will be updating the user's location, the time spent on a hike, and the distance traveled in real time. MVVM allows for real-time updates as the view changes to reflect the state of the view model. Trekvizion also doesn't rely on many external services, so these updates can be done quickly and efficiently while offline.
 
 
 ### Use Cases
