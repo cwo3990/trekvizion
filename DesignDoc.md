@@ -1,10 +1,10 @@
 
 # PROJECT Design Documentation
 
-> _The following template provides the headings for your Design
+<!-- > _The following template provides the headings for your Design
 > Documentation.  As you edit each section make sure you remove these
 > commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
+> and appear in the generated PDF in italics._ -->
 
 ## Team Information
 * Team name: TrekVizion
@@ -27,7 +27,11 @@ This section describes the features of the application.
 > _Provide a simple description of the Minimum Viable Product._
 
 ### MVP Features
->  _Provide a list of top-level Epics and/or Stories of the MVP._
+The minimal viable product (MVP) for this hiking application would include the following features:
+* Users should be able to upload image and perform a registration 
+* Users should be shown the perceived accuracy of map before starting the hike
+* Using the registered image the user should be able to start and track the hike in real time.
+* User should be able to end trip and view conclusive hike metric such as total distance traveled.
 
 
 ## Architecture and Design
