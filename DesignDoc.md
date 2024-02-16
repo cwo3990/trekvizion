@@ -33,6 +33,17 @@ The minimal viable product (MVP) for this hiking application would include the f
 * Real-Time Tracking: Utilizing the registered image, users can start and track the hike in real time.
 * Trip Conclusion: Users can end the trip and view conclusive hike metrics, such as total distance traveled.
 
+#### Full Features List Intergration
+* Add Hike Record: Users can record their hike experience, including ratings, difficulty levels, and attached pictures. The recorded data, along with the path taken during the hike and associated metrics, will be saved.
+* Areas of Interest: During the hike, users can add areas of interest to the map and attach notes and pictures to these coordinated points.
+* Emergency Contact Plan: Users are prompted to fill out an emergency contact plan before starting the hike, which will be sent to the specified individual upon hike completion.
+* Time Tracking: Users can track the duration of the hike, with the ability to pause and resume the timer as needed.
+* Location and Path Display: During the hike, users can view their current location on the registerd image, along with the distance traveled.
+* Weather Forecast: Before starting the hike, users can view the weather forecast for a pre-specified time frame.
+* Time to Sundown: During the hike, users can see the time to sundown to estimate if they can finish the hike before dark.
+* Unit System Switch: In the application settings, users can switch between imperial and metric systems for convenient distance measurement during the hike.
+* History Entries: Users can access the history entries of previous hikes and search through them based on specific criteria.
+
 
 ## Architecture and Design
 
