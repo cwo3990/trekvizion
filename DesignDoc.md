@@ -24,14 +24,14 @@ TrekVizion is an innovated hiking application that employs image registration to
 This section describes the features of the application.
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+The MVP aims to provide a safe and reliable hiking experience by offering essential functionalities for trip planning, real-time tracking, and post-hike analysis.
 
 ### MVP Features
 The minimal viable product (MVP) for this hiking application would include the following features:
-* Users should be able to upload image and perform a registration 
-* Users should be shown the perceived accuracy of map before starting the hike
-* Using the registered image the user should be able to start and track the hike in real time.
-* User should be able to end trip and view conclusive hike metric such as total distance traveled.
+* Image Registration: Users can upload an image and perform registration.
+* Perceived Accuracy Display: Users are shown the perceived accuracy of the map before starting the hike.
+* Real-Time Tracking: Utilizing the registered image, users can start and track the hike in real time.
+* Trip Conclusion: Users can end the trip and view conclusive hike metrics, such as total distance traveled.
 
 
 ## Architecture and Design
