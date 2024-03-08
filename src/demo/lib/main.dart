@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:demo/native_opencv.dart';
 
 void main() {
   runApp(const TrekVizionDemoApp());
@@ -68,6 +69,17 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void showVersion() {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final snackbar = SnackBar(
+      content: Text('OpenCV version: ${opencvVersion()}'),
+    );
+
+    scaffoldMessenger
+      ..removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss)
+      ..showSnackBar(snackbar);
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -116,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: showVersion,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
