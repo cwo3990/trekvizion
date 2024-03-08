@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void showVersion() {
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final snackbar = SnackBar(
-      content: Text('OpenCV version: ${opencvVersion()}'),
+      content: Text(opencvVersion()),
     );
 
     scaffoldMessenger
@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: showVersion,
+        onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

@@ -32,8 +32,8 @@ A new Flutter plugin project.
   # s.frameworks = 'AVFoundation'
 
    # including C++ library
-   s.library = 'c++'
+  s.library = 'c++'
 
-   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 
 end
