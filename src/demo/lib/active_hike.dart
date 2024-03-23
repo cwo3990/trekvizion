@@ -32,6 +32,7 @@ class _ActiveHikePageState extends State<ActiveHikePage> {
   final StopWatchTimer stopWatchTimer = StopWatchTimer();
   var mapStyle;
   late StreamSubscription<Position> positionStream;
+  Timer? timer;
 
   @override
   void initState() {
@@ -46,6 +47,7 @@ class _ActiveHikePageState extends State<ActiveHikePage> {
     appendDist = 0;
     // stopWatchTimer.onExecute.add(StopWatchExecute.reset);
     stopWatchTimer.clearPresetTime();
+    // timer = Timer.periodic(Duration(seconds: 10), (Timer t ) => getCurrentPosition());
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getCurrentPosition();
     });
