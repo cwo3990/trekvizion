@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:demo/native_opencv.dart';
+// import 'package:demo/native_opencv.dart';
 
 void main() {
-  runApp(const TrekVizionDemoApp());
+  runApp(const TrekVizionApp());
 }
 
-class TrekVizionDemoApp extends StatelessWidget {
-  const TrekVizionDemoApp({super.key});
+class TrekVizionApp extends StatelessWidget {
+  const TrekVizionApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Trekvizion',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -32,106 +32,221 @@ class TrekVizionDemoApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'TrekVizion Demo Home Page'),
+      home: const HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  void showVersion() {
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-    final snackbar = SnackBar(
-      content: Text(opencvVersion()),
-    );
-
-    scaffoldMessenger
-      ..removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss)
-      ..showSnackBar(snackbar);
-  }
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            const Text('Welcome to Trekvizion!', style: TextStyle(fontSize: 24)),
+            Image.asset('images/Logo.png', height: 200, width: 200),
+            ElevatedButton(
+              onPressed: () {
+                print('Start New Hike');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const StartNewHikePage()),
+                );
+              },
+              child: const Text('Start New Hike'),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            ElevatedButton(
+              onPressed: () {
+                print('Past Hikes');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PastHikesPage()),
+                );
+              },
+              child: const Text('Past Hikes'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                print('Settings');
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SettingsPage()),
+                // );
+              },
+              child: const Text('Settings'),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+class StartNewHikePage extends StatefulWidget {
+  const StartNewHikePage({super.key});
+
+  @override
+  State<StartNewHikePage> createState() => _StartNewHikePageState();
+}
+
+class _StartNewHikePageState extends State<StartNewHikePage> {
+  final _formKey = GlobalKey<FormState>();
+  
+  String _title = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Start New Hike'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Title'),
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _title = value!;
+                },
+              ),
+              const SizedBox(height: 5),
+              // Display uploaded image here (if any)
+              //
+              ElevatedButton(
+                onPressed: () => {
+                  // Give users option to select from gallery or take new photo
+                  // use external library for this
+                }, 
+                child: const Text('Upload Map')
+              ),
+              const SizedBox(height: 5),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ActiveHikePage(Key('active_hike')),
+                      )
+                    );
+                  }
+                },
+                child: const Text('Start Hike'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ActiveHikePage extends StatefulWidget {
+  // final String title;
+
+  const ActiveHikePage(Key key) : super(key: key);
+
+  @override
+  State<ActiveHikePage> createState() => _ActiveHikePageState();
+}
+
+class _ActiveHikePageState extends State<ActiveHikePage> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Display the map and the metrics table here
+            ElevatedButton(onPressed: () {}, child: const Icon(Icons.play_arrow)),
+            ElevatedButton(onPressed: () {}, child: const Icon(Icons.stop)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PastHikesPage extends StatefulWidget {
+  const PastHikesPage({super.key});
+
+  @override
+  State<PastHikesPage> createState() => _PastHikesPageState();
+}
+
+class _PastHikesPageState extends State<PastHikesPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Past Hikes'),
+      ),
+      body: ListView(
+        children: const [
+          // Display the list of past hikes here
+          Placeholder(),
+        ],
+      ),
+    );
+  }
+}
+
+class HikeInfoPage extends StatefulWidget {
+
+  final String title = 'Hike Title';
+  
+  const HikeInfoPage({super.key});
+
+  @override
+  State<HikeInfoPage> createState() => _HikeInfoPageState();
+}
+
+class _HikeInfoPageState extends State<HikeInfoPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Display the image and the metrics table here
+            // Display the description here
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
+              },
+              child: const Text('Finish'),
+           ),
+          ],
+        ),
+      ),
     );
   }
 }
