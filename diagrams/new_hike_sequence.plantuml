@@ -1,0 +1,23 @@
+@startuml
+skinparam style strictuml
+actor Hiker as user
+
+create participant Hike
+user -> Hike
+
+' participant CoregistrationService
+alt has trip plan
+    create participant Trip_Plan
+    Hike -> Trip_Plan
+    loop while more hikers
+        create participant Hiker
+        Trip_Plan -> Hiker
+end
+group hike has started
+    alt new POI
+        user -> Hike
+        Hike -> 
+    end
+end
+
+@enduml

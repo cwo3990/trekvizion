@@ -1,5 +1,13 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:demo/native_opencv.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
+
+import 'active_hike.dart';
 
 void main() {
   runApp(const TrekVizionApp());
@@ -139,7 +147,7 @@ class _StartNewHikePageState extends State<StartNewHikePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ActiveHikePage(Key('active_hike')),
+                          builder: (context) => const ActiveHikePage(),
                       )
                     );
                   }
@@ -154,33 +162,7 @@ class _StartNewHikePageState extends State<StartNewHikePage> {
   }
 }
 
-class ActiveHikePage extends StatefulWidget {
-  // final String title;
 
-  const ActiveHikePage(Key key) : super(key: key);
-
-  @override
-  State<ActiveHikePage> createState() => _ActiveHikePageState();
-}
-
-class _ActiveHikePageState extends State<ActiveHikePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Display the map and the metrics table here
-            ElevatedButton(onPressed: () {}, child: const Icon(Icons.play_arrow)),
-            ElevatedButton(onPressed: () {}, child: const Icon(Icons.stop)),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class PastHikesPage extends StatefulWidget {
   const PastHikesPage({super.key});

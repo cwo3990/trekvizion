@@ -1,0 +1,78 @@
+@startuml
+  class Hiker {
+    hikerID : UUID
+    name : String
+    phone : String
+    pictureURL : Path
+  }
+  class TripPlan {
+    emergencyContact : String
+    emergencyServices : String
+    estimatedToCompleteAt : Time
+    locationStart : Cords
+    locationEnd : Cords
+    otherHikers : List<Hiker>
+    
+    addHiker()
+    sendPlan()
+    finishHike()
+  }
+ 
+  class POI {
+    poiID : UUID
+    location : Cords
+    description : String
+    picturesURL : List<Path>
+    
+    addPictures()
+    deletePictures()
+  }
+  class Hike {
+    hikeState : enum HikeState
+    mapPhoto : png
+    path : json //'TODO: How and if are we going to save hike path'
+    pois : List<POI>
+    tripPlan : TripPlan
+    hikeReview : HikeReview
+    
+    sunDown : Time
+    startTime : Time
+    endTime : Time
+    startCoordinates : Cords
+    endCoordinates : Cords
+    avgSpeed : Speed
+    curSpeed : Speed //'TODO: figure out how speed metric is going to work'
+    
+    addPOI()
+    deletePOI(POI)
+    setMap() //'CoregistrationService is responsible for heavy lifting here'
+    editPOI()
+    createPOI()
+    
+    pauseHike()
+    resumeHike()
+    finishHike()
+  }
+  class HikeReview {
+    hikeTitle : String
+    userNotes : String
+    userRating : int 
+  }
+  class GeoLocationTracker
+  class CoregistrationService
+  class GetStorage
+  class WeatherService
+  enum HikeState {
+    PAUSED
+    ENDED
+    PLANNING
+    HIKING
+    REVIEW
+  }
+  Hike -- "0..*"POI
+  Hike -- "0..1"TripPlan
+  Hiker"0..*" -- TripPlan
+  
+  Hike -- "0..1" HikeReview
+  Hike --- CoregistrationService
+@enduml
