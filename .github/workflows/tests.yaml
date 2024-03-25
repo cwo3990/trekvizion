@@ -1,5 +1,5 @@
 name: Automated Flutter Tests
-on: [push, pull_request]
+on: [push]
 
 env:
     FLUTTER_VERSION: "3.19.2"
