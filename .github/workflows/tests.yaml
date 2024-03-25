@@ -1,0 +1,22 @@
+name: Automated Flutter Tests
+on: [push, pull_request]
+
+env:
+    FLUTTER_VERSION: "3.19.2"
+
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo
+                uses: actions/checkout@v2
+            - name: Install Flutter
+                run: git clone https://github.com/flutter/flutter.git --depth 1 -b $FLUTTER_VERSION flutter
+            - name: Add Flutter to Path
+                run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
+            - name: Install Dependencies
+                run: flutter pub get
+                working-directory: $GITHUB_WORKSPACE/src/demo
+            - name: Run Tests
+                run: flutter test
+                working-directory: $GITHUB_WORKSPACE/src/demo
