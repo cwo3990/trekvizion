@@ -16,7 +16,7 @@ jobs:
               run: echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
             - name: "Install Dependencies"
               run: flutter pub get
-              working-directory: $GITHUB_WORKSPACE/src/demo
+              working-directory: src/demo
             - name: "Run Tests"
               run: flutter test
-              working-directory: $GITHUB_WORKSPACE/src/demo
+              working-directory: src/demo
