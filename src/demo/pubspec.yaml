@@ -28,8 +28,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  opencv_native:
-    path: opencv_native
+  # opencv_native:
+  #   path: opencv_native
   flutter:
     sdk: flutter
 
