@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:demo/native_opencv.dart';
+import 'package:demo/pages/map_page.dart';
 
 void main() {
   runApp(const TrekVizionDemoApp());
@@ -123,6 +124,13 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const MapPage()));
+              },
+              child: const Text('Show Map'),
             ),
           ],
         ),
