@@ -45,13 +45,13 @@ class _ActiveHikePageState extends State<ActiveHikePage> {
     avgSpeed = 0;
     speedCounter = 0;
     appendDist = 0;
-    // stopWatchTimer.onExecute.add(StopWatchExecute.reset);
+    stopWatchTimer.onResetTimer();
     stopWatchTimer.clearPresetTime();
     // timer = Timer.periodic(Duration(seconds: 10), (Timer t ) => getCurrentPosition());
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getCurrentPosition();
     });
-    // stopWatchTimer.onExecute.add(StopWatchExecute.start);
+    stopWatchTimer.onStartTimer();
     super.initState();
   }
 
@@ -237,14 +237,37 @@ class _ActiveHikePageState extends State<ActiveHikePage> {
                       ],
                     ),
                     const Divider(),
-                    InkWell(
-                      child: Icon(
-                        Icons.stop_circle_outlined,
-                        size: 45,
-                        color: Colors.redAccent,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          child: Icon(
+                            Icons.stop_circle_outlined,
+                            size: 45,
+                            color: Colors.redAccent,
+                          ),
+                          onTap: () async {
+                            //Save hike to database
+                          }
 
-                    ),
+                        ),
+                        InkWell(
+                          child: Icon(
+                            Icons.pause_circle_outlined,
+                            size: 45,
+                            color: Colors.black,
+                          ),
+                          onTap: () async {
+                            if(stopWatchTimer.isRunning)
+                              stopWatchTimer.onStopTimer();
+                            else
+                              stopWatchTimer.onStartTimer();
+                          }
+                        )
+                      ],
+                    )
+
                   ],
                 ),
               ))
