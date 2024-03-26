@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import asyncio
 
 from typing import Any
 
@@ -10,14 +11,14 @@ class Coregistrator:
         self.map_img_filepath = ''
         self.result_img_filepath = ''
 
-    async def run(
+    def run(
             self,
             user_img_filepath: str,
             map_img_filepath: str,
             user_img_points: Any,
             map_img_points: Any,
             out_img_filepath: str
-    ) -> dict:
+    ) -> None:
         img_1_arr = plt.imread(user_img_filepath)
         img_2_arr = plt.imread(map_img_filepath)
 
@@ -29,6 +30,4 @@ class Coregistrator:
 
         img_2_arr_warped = cv2.warpPerspective(img_2_arr, M, (img_1_arr.shape[1], img_1_arr.shape[0]))
 
-        cv2.imwrite(out_filename, img_2_arr_warped[..., ::-1])
-
-        return dict()
+        cv2.imwrite(out_img_filepath, img_2_arr_warped[..., ::-1])

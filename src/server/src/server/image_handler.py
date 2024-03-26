@@ -1,7 +1,7 @@
+import asyncio
 from aiohttp import web
 
 from coregistration.coregistrator import Coregistrator
-
 
 coregistrator = Coregistrator()
 
@@ -26,15 +26,19 @@ class ImageHandler:
         if not download_result.get('success'):
             return download_result.get('response')
 
-        coregistration_result = await coregistrator.run(
-            user_img_filepath=self.user_img_filepath,
-            map_img_filepath=self.map_img_filepath,
-            user_img_points=None,
-            map_img_points=None,
-            out_img_filepath=self.out_img_filepath
+        loop = asyncio.get_event_loop()
+
+        await loop.run_in_executor(
+            None,
+            coregistrator.run,
+            self.user_img_filepath,
+            self.map_img_filepath,
+            None,
+            None,
+            self.out_img_filepath
         )
 
-        return web.Response(text="To be done")
+        return web.Response(text='To be done')
 
     async def download_images(
             self,
@@ -76,6 +80,5 @@ class ImageHandler:
 
         return dict(success=True)
 
-        #with open(self.map_img_filepath, 'rb') as response_image:
+        # with open(self.map_img_filepath, 'rb') as response_image:
         #    return web.Response(body=response_image.read(), content_type='image/jpeg')
-
