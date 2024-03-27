@@ -5,6 +5,7 @@ import asyncio
 
 from typing import Any
 
+
 class Coregistrator:
     def __init__(self):
         self.user_img_filepath = ''
@@ -19,15 +20,18 @@ class Coregistrator:
             map_img_points: Any,
             out_img_filepath: str
     ) -> None:
-        img_1_arr = plt.imread(user_img_filepath)
-        img_2_arr = plt.imread(map_img_filepath)
+        """
 
-        to_uint8 = lambda x: ((x - x.min()) / (x.max() - x.min()) * 255).astype(np.uint8)
-        user_img_arr_uint8 = to_uint8(img_1_arr)
-        map_img_arr_uint8 = to_uint8(img_2_arr)
+        :param user_img_filepath:
+        :param map_img_filepath:
+        :param user_img_points:
+        :param map_img_points:
+        :param out_img_filepath:
+        :return:
+        """
 
-        M, mask = cv2.findHomography(np.array(map_img_points), np.array(user_img_points), cv2.RANSAC, 5)
-
-        img_2_arr_warped = cv2.warpPerspective(img_2_arr, M, (img_1_arr.shape[1], img_1_arr.shape[0]))
-
-        cv2.imwrite(out_img_filepath, img_2_arr_warped[..., ::-1])
+        # below is the code just to test synchronous opencv code in async context
+        # since we do not have the adapted opencv coregistration yet
+        img = cv2.imread(user_img_filepath)
+        grayscale_img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+        cv2.imwrite(out_img_filepath, grayscale_img)
