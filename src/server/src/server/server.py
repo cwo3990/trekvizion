@@ -13,7 +13,7 @@ async def init_app() -> web.Application:
     """
 
     app = web.Application()
-    app.router.add_post('/upload_image', image_handler.handle_images)
+    app.router.add_post('/upload_images', image_handler.handle_images)
     return app
 
 
