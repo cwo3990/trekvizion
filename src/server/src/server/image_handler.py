@@ -12,7 +12,10 @@ class ImageHandler:
 
         self.user_img_filepath = ''
         self.map_img_filepath = ''
-        self.out_img_filepath = '_out'
+        self.out_img_filepath = ''
+
+        self.user_img_coordinates = []
+        self.map_img_coordinates = []
 
     async def handle_images(
             self,
@@ -28,11 +31,14 @@ class ImageHandler:
         User images are save on disk and coregistration is performed.
         The resulting image is sent in the response body.
         """
+
         download_result = await self.download_images(request)
         if not download_result.get('success'):
             return download_result.get('response')
 
-        self.out_img_filepath = self.user_img_filepath + self.out_img_filepath
+        coordinates_parsing_result = await self.parse_coordinates(request)
+        if not coordinates_parsing_result.get('success'):
+            return coordinates_parsing_result.get('response')
 
         coregistration_result = await self.coregister_images()
         if not coregistration_result.get('success'):
@@ -42,6 +48,39 @@ class ImageHandler:
             return web.Response(
                 body=response_image.read(),
                 content_type='image/jpeg'
+            )
+
+    async def parse_coordinates(
+            self,
+            request: web.Request
+    ) -> dict:
+        """
+        Parse image coordinates from the query-string params of the request
+        :return:
+        In case of successful parsing:
+            dict(success=True)
+        In case of unsuccessful parsing:
+            dict(success=False, web.Response(text='reason for error'))
+        """
+        try:
+            self.user_img_coordinates = [
+                (float(request.query.getone('usr_1x')), float(request.query.getone('usr_1y'))),
+                (float(request.query.getone('usr_2x')), float(request.query.getone('usr_2y'))),
+                (float(request.query.getone('usr_3x')), float(request.query.getone('usr_3y'))),
+                (float(request.query.getone('usr_4x')), float(request.query.getone('usr_4y')))
+            ]
+            self.map_img_coordinates = [
+                (float(request.query.getone('map_1x')), float(request.query.getone('map_1y'))),
+                (float(request.query.getone('map_2x')), float(request.query.getone('map_2y'))),
+                (float(request.query.getone('map_3x')), float(request.query.getone('map_3y'))),
+                (float(request.query.getone('map_4x')), float(request.query.getone('map_4y')))
+            ]
+            return dict(success=True)
+
+        except Exception as e:
+            return dict(
+                success=False,
+                response=web.Response(text=f'Error while parsing query-string params: {e}')
             )
 
     async def coregister_images(self) -> dict:
@@ -61,13 +100,16 @@ class ImageHandler:
                 coregistrator.run,
                 self.user_img_filepath,
                 self.map_img_filepath,
-                None,
-                None,
+                self.user_img_coordinates,
+                self.map_img_coordinates,
                 self.out_img_filepath
             )
 
         except Exception as e:
-            return dict(success=False, response=web.Response(text=f'Error while performing coregistration: {e}'))
+            return dict(
+                success=False,
+                response=web.Response(text=f'Error while performing coregistration: {e}')
+            )
 
         return dict(success=True)
 
@@ -77,6 +119,11 @@ class ImageHandler:
     ) -> dict:
         """
         Saves the client images to the local storage.
+        :return:
+        In case of successful downloading to local storage:
+            dict(success=True)
+        In case of unsuccessful downloading to local storage:
+            dict(success=False, web.Response(text='reason for error'))
         """
         reader = await request.multipart()
 
@@ -91,6 +138,7 @@ class ImageHandler:
 
                 if field.name == 'user_image':
                     self.user_img_filepath = filename
+                    self.out_img_filepath = f'../../static/images/out_{field.filename}'
                 if field.name == 'map_image':
                     self.map_img_filepath = filename
 
@@ -100,13 +148,12 @@ class ImageHandler:
                         if not chunk:
                             break
                         f.write(chunk)
-
                     f.close()
 
             else:
                 return dict(
                     success=False,
-                    response=web.Response(text=f"Invalid field: {field.name}. Expected: 'user_image' or 'map_image'")
+                    response=web.Response(text=f"Invalid field: {field.name}. Expected: 'user_image', then 'map_image'")
                 )
 
         return dict(success=True)
